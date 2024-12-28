@@ -1,9 +1,0 @@
-[package]
-name = "simple-platform"
-version = "0.1.0"
-edition = "2021"
-
-[dependencies]
-avian2d.workspace = true
-bevy.workspace = true
-simple-2d-camera = { path = "../../random_plugins/simple-2d-camera" }

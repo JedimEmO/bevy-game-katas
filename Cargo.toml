@@ -2,8 +2,12 @@
 
 resolver = "2"
 
-members = ["katas/simple-platform", "random_plugins/simple-2d-camera"]
+members = [
+    "katas/1-simple-platform",
+    "random_plugins/simple-2d-camera",
+    "random_plugins/simple-platform-player-controller"
+]
 
 [workspace.dependencies]
-avian2d = { git = "https://github.com/Jondolf/avian.git", features = ["default"], rev = "52cbcecce0fd05a65005ab6935ebeb231373c2c6" }
-bevy = "0.15.0-rc.3"
+avian2d = { version = "0.2.0", features = ["default"] }
+bevy = "0.15.0"

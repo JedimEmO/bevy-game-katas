@@ -1,5 +1,4 @@
 mod game_system;
-mod player;
 
 use bevy::prelude::*;
 use game_system::SimplePlatformGame;
