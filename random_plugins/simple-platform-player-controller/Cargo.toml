@@ -4,5 +4,6 @@ version = "0.1.0"
 edition = "2021"
 
 [dependencies]
+simple-2d-camera = { path = "../simple-2d-camera" }
 avian2d.workspace = true
 bevy.workspace = true

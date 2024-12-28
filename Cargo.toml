@@ -4,6 +4,7 @@ resolver = "2"
 
 members = [
     "katas/1-simple-platform",
+    "katas/2-simple-tiled-platform",
     "random_plugins/simple-2d-camera",
     "random_plugins/simple-platform-player-controller"
 ]
@@ -11,3 +12,10 @@ members = [
 [workspace.dependencies]
 avian2d = { version = "0.2.0", features = ["default"] }
 bevy = "0.15.0"
+bevy_ecs_tiled = { version = "0.5.0", features = ["avian"] }
+bevy_ecs_tilemap = { version = "0.15.0", default-features = false }
+tiled = "0.13.0"
+
+# Set the default for dependencies.
+[profile.dev.package."*"]
+opt-level = 2

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<template>
+ <object name="coin">
+  <properties>
+   <property name="coin" type="class" propertytype="simple_tiled_platform::game_system::Collectible"/>
+  </properties>
+  <point/>
+ </object>
+</template>

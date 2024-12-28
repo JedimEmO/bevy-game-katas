@@ -1,0 +1,23 @@
+[package]
+name = "simple-tiled-platform"
+version = "0.1.0"
+edition = "2021"
+
+
+# Enable a large amount of optimization in the dev profile for dependencies.
+[profile.dev.package."*"]
+opt-level = 3
+
+[features]
+default = ["user-properties"]
+avian-debug = []
+user-properties = ["bevy_ecs_tiled/user_properties"]
+
+[dependencies]
+avian2d.workspace = true
+bevy.workspace = true
+bevy_ecs_tiled.workspace = true
+bevy_ecs_tilemap.workspace = true
+simple-2d-camera = { path = "../../random_plugins/simple-2d-camera" }
+simple-platform-player-controller = { path = "../../random_plugins/simple-platform-player-controller" }
+tiled.workspace = true

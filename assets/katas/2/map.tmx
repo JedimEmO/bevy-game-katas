@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.10" tiledversion="1.11.0" orientation="orthogonal" renderorder="right-down" width="30" height="20" tilewidth="16" tileheight="16" infinite="0" nextlayerid="3" nextobjectid="31">
+ <editorsettings>
+  <export target="map.rendered.tmx" format="tmx"/>
+ </editorsettings>
+ <tileset firstgid="1" name="basic-tiles" tilewidth="16" tileheight="16" tilecount="64" columns="8">
+  <image source="../../tilesets/2-tileset.png" width="128" height="128"/>
+  <tile id="1">
+   <objectgroup draworder="index" id="2">
+    <object id="2" x="0.0222222" y="0.977778" width="15.9111" height="14.9778"/>
+    <object id="3" x="0" y="1" width="16" height="15"/>
+   </objectgroup>
+  </tile>
+  <tile id="2">
+   <objectgroup draworder="index" id="2">
+    <object id="1" x="1" y="0" width="15" height="16"/>
+   </objectgroup>
+  </tile>
+  <tile id="3">
+   <objectgroup draworder="index" id="2">
+    <object id="1" x="0" y="0" width="16" height="16"/>
+   </objectgroup>
+  </tile>
+  <tile id="4">
+   <objectgroup draworder="index" id="2">
+    <object id="1" x="0" y="0" width="16" height="16"/>
+   </objectgroup>
+  </tile>
+  <tile id="5">
+   <objectgroup draworder="index" id="2">
+    <object id="1" x="0" y="0" width="15" height="16"/>
+   </objectgroup>
+  </tile>
+  <tile id="6">
+   <objectgroup draworder="index" id="2">
+    <object id="1" x="0" y="0" width="13" height="16"/>
+   </objectgroup>
+  </tile>
+  <tile id="9">
+   <objectgroup draworder="index" id="2">
+    <object id="3" x="0.02841" y="4.03977" width="16.071" height="11.8125"/>
+   </objectgroup>
+  </tile>
+  <tile id="10">
+   <objectgroup draworder="index" id="2">
+    <object id="2" x="0.0426" y="3.81818" width="15.946" height="12"/>
+   </objectgroup>
+  </tile>
+  <tile id="11">
+   <objectgroup draworder="index" id="2">
+    <object id="3" x="0.0482818" y="3.72727" width="15.929" height="12.25"/>
+   </objectgroup>
+  </tile>
+  <tile id="17">
+   <objectgroup draworder="index" id="2">
+    <object id="1" x="1" y="0.03125" width="15.0313" height="15.875"/>
+   </objectgroup>
+  </tile>
+  <tile id="18">
+   <objectgroup draworder="index" id="3">
+    <object id="4" x="0" y="0.03125" width="16.0938" height="16.0938"/>
+   </objectgroup>
+  </tile>
+  <tile id="19">
+   <objectgroup draworder="index" id="2">
+    <object id="1" x="0.03125" y="0" width="12.0313" height="16"/>
+   </objectgroup>
+  </tile>
+  <tile id="25">
+   <objectgroup draworder="index" id="2">
+    <object id="1" x="2" y="0.03125" width="14.125" height="15.0313"/>
+   </objectgroup>
+  </tile>
+  <tile id="26">
+   <objectgroup draworder="index" id="2">
+    <object id="1" x="0.03125" y="5.96875" width="16" height="8.1875"/>
+   </objectgroup>
+  </tile>
+  <tile id="27">
+   <objectgroup draworder="index" id="2">
+    <object id="1" x="0.03125" y="0" width="11.9688" height="13.0625"/>
+   </objectgroup>
+  </tile>
+  <tile id="41">
+   <objectgroup draworder="index" id="2">
+    <object id="1" x="-0.501258" y="3.87141" width="17.4142" height="3.80115" rotation="14.6242"/>
+   </objectgroup>
+  </tile>
+  <tile id="42">
+   <objectgroup draworder="index" id="2">
+    <object id="1" x="1.03125" y="8.59375" width="14.9688" height="6.03125"/>
+   </objectgroup>
+  </tile>
+  <tile id="43">
+   <objectgroup draworder="index" id="2">
+    <object id="1" x="-1.05774" y="7.86492" width="17.5491" height="2.47011" rotation="347.626"/>
+   </objectgroup>
+  </tile>
+ </tileset>
+ <tileset firstgid="65" source="tileset.xml"/>
+ <layer id="1" name="Tile Layer 1" width="30" height="20">
+  <data encoding="csv">
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,10,11,12,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,18,19,20,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,18,19,20,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,18,19,11,11,11,12,42,43,43,43,43,43,43,43,43,44,10,11,11,12,0,0,0,0,0,0,0,0,
+0,0,18,19,19,19,19,20,0,0,0,0,0,0,0,0,0,0,26,27,27,28,0,0,0,0,0,0,0,0,
+0,0,26,27,27,27,27,28,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,10,11,11,12,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,26,27,27,28,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,10,11,11,12,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,26,27,27,28,0,0,0,0,0,0,
+10,11,11,11,11,11,11,11,11,11,11,12,42,43,44,10,11,11,12,0,0,0,0,0,0,0,0,0,0,0,
+18,83,83,83,83,83,83,83,83,83,83,20,0,0,0,26,27,27,28,0,0,0,0,0,0,0,0,0,0,0,
+18,83,83,83,83,83,83,83,83,83,83,20,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+18,83,83,83,83,83,83,83,83,83,83,20,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+26,27,27,27,27,27,27,27,27,27,27,28,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+</data>
+ </layer>
+ <objectgroup id="2" name="coins">
+  <object id="16" template="templates/coin.tx" x="154.667" y="171.667"/>
+  <object id="17" template="templates/coin.tx" x="251.5" y="122"/>
+  <object id="18" template="templates/coin.tx" x="315" y="192.5"/>
+  <object id="19" template="templates/coin.tx" x="399" y="139.5"/>
+  <object id="20" template="templates/coin.tx" x="66.6667" y="232.333"/>
+  <object id="25" template="templates/coin.tx" x="201.667" y="122"/>
+  <object id="26" template="templates/coin.tx" x="153" y="122"/>
+  <object id="27" template="templates/coin.tx" x="69.3333" y="68.6667"/>
+  <object id="28" template="templates/coin.tx" x="42.6667" y="68.3333"/>
+  <object id="29" template="templates/coin.tx" x="184" y="171.667"/>
+  <object id="30" template="templates/coin.tx" x="170.667" y="171.333"/>
+ </objectgroup>
+</map>
