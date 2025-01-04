@@ -1,6 +1,7 @@
 use simple_2d_camera::PixelCameraTracked;
 use avian2d::math::AdjustPrecision;
 use avian2d::prelude::*;
+use bevy::core::FrameCount;
 use bevy::prelude::*;
 use bevy::sprite::Anchor;
 
@@ -43,7 +44,7 @@ impl Plugin for PlayerPlugin {
     ShapeCaster(|| ShapeCaster::new(Collider::rectangle(TILE_SIZE_PIXELS, TILE_SIZE_PIXELS), Vec2::ZERO, 0., Dir2::NEG_Y)),
     LockedAxes(|| LockedAxes::ROTATION_LOCKED),
     MovementDampeningFactor(|| MovementDampeningFactor(AERIAL_X_DAMPENING_FACTOR)),
-    DoubleJumped,
+    JumpState,
     PixelCameraTracked
 )]
 pub struct Player;
@@ -52,8 +53,9 @@ pub struct Player;
 pub struct Grounded;
 
 #[derive(Component, Default)]
-pub struct DoubleJumped {
+pub struct JumpState {
     pub used: u8,
+    pub left_ground_at_frame: Option<u32>
 }
 
 #[derive(Component)]
@@ -88,10 +90,8 @@ pub enum MovementAction {
 fn keyboard_input_system(
     mut event_sender: EventWriter<MovementAction>,
     key_input: Res<ButtonInput<KeyCode>>,
-    player: Query<&DoubleJumped, With<Player>>,
 ) {
     let mut direction = Vec2::ZERO;
-    let double_jumped = player.iter().next().unwrap();
 
     if key_input.pressed(KeyCode::KeyD) || key_input.pressed(KeyCode::ArrowRight) {
         direction.x = 1.;
@@ -103,34 +103,43 @@ fn keyboard_input_system(
         event_sender.send(MovementAction::Horizontal(direction));
     }
 
-    if key_input.just_pressed(KeyCode::Space) && double_jumped.used < 2 {
+    if key_input.just_pressed(KeyCode::Space)  {
         event_sender.send(MovementAction::Jump);
     }
 }
 
 fn player_move_action_system(
     time: Res<Time>,
+    frame_count: Res<FrameCount>,
     mut movement_events: EventReader<MovementAction>,
     mut player_velocity: Query<
-        (&mut LinearVelocity, Option<&Grounded>, &mut DoubleJumped),
+        (&mut LinearVelocity, Option<&Grounded>, &mut JumpState, &ShapeHits),
         With<Player>,
     >,
 ) {
     let delta_t = time.delta_secs_f64().adjust_precision();
 
-    for (mut linear_velocity, grounded, mut double_jumped) in player_velocity.iter_mut() {
+    for (mut linear_velocity, grounded, mut double_jumped, hits) in player_velocity.iter_mut() {
         for movement_action in movement_events.read() {
             match movement_action {
                 MovementAction::Horizontal(dir) => {
-                    let factor = if grounded.is_none() { 0.4 } else { 1. };
+                    let air_factor = if grounded.is_none() { 0.4 } else { 1. };
+                    let reverse_factor = if linear_velocity.x.signum() != dir.x.signum() {
+                        2.
+                    } else {
+                        1.
+                    };
 
-                    linear_velocity.x += dir.x * ACCELERATION * delta_t * factor;
-                    linear_velocity.y += dir.y * ACCELERATION * delta_t * factor;
+                    linear_velocity.x += dir.x * ACCELERATION * delta_t * air_factor * reverse_factor;
+                    linear_velocity.y += dir.y * ACCELERATION * delta_t * air_factor * reverse_factor;
 
                     linear_velocity.x = linear_velocity.x.clamp(-MAX_SPEED, MAX_SPEED);
                 }
                 MovementAction::Jump => {
-                    if double_jumped.used < 2 {
+                    let left_ground_at = double_jumped.left_ground_at_frame.unwrap_or(frame_count.0.wrapping_sub(1000));
+                    let is_grounded = grounded.is_some();
+
+                    if is_grounded || frame_count.0.wrapping_sub(left_ground_at) < 30 {
                         linear_velocity.y = JUMP_SPEED;
                     }
 
@@ -143,17 +152,23 @@ fn player_move_action_system(
 
 fn grounded_system(
     mut commands: Commands,
-    mut query: Query<(Entity, &ShapeHits, &mut DoubleJumped), With<Player>>,
+    frame_count: Res<FrameCount>,
+    mut query: Query<(Entity, &ShapeHits, &mut JumpState, &LinearVelocity), With<Player>>,
 ) {
-    for (entity, hits, mut double_jumped) in &mut query {
+    for (entity, hits, mut jump_state_data, velocity) in &mut query {
         let is_grounded = hits
             .iter()
             .any(|hit| hit.point2.y < 0. && hit.distance <= COLLISION_MARGIN);
 
         if is_grounded {
             commands.entity(entity).insert(Grounded);
-            double_jumped.used = 0;
+            jump_state_data.used = 0;
+            jump_state_data.left_ground_at_frame = None;
         } else {
+            if jump_state_data.left_ground_at_frame.is_none() && velocity.y.abs() < 2. {
+                jump_state_data.left_ground_at_frame = Some(frame_count.0);
+            }
+
             commands.entity(entity).remove::<Grounded>();
         }
     }
