@@ -5,8 +5,9 @@
     },
     "activeFile": "map.tmx",
     "expandedProjectPaths": [
-        ".",
-        "templates"
+        "sprites",
+        "templates",
+        "."
     ],
     "fileStates": {
         "": {
@@ -15,10 +16,10 @@
         },
         "map.rendered.tmx": {
             "scale": 16,
-            "selectedLayer": 0,
+            "selectedLayer": 1,
             "viewCenter": {
-                "x": 223.125,
-                "y": 242.71875
+                "x": 240,
+                "y": 160
             }
         },
         "map.rendered.tmx#basic-tiles": {
@@ -28,11 +29,11 @@
             "expandedObjectLayers": [
                 2
             ],
-            "scale": 3,
-            "selectedLayer": 1,
+            "scale": 1.5,
+            "selectedLayer": 0,
             "viewCenter": {
-                "x": 161.99999999999997,
-                "y": 189.16666666666666
+                "x": 292,
+                "y": 193.99999999999997
             }
         },
         "map.tmx#basic-tiles": {

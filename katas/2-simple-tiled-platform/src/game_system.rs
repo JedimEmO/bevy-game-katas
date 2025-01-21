@@ -91,7 +91,9 @@ fn player_collectible_collider_system(
     colliders: Query<(Entity, &CollidingEntities)>,
     player: Query<Entity, With<Player>>,
 ) {
-    let player_entity = player.iter().next().unwrap();
+    let Some(player_entity) = player.iter().next() else {
+        return;
+    };
 
     for (entity, collisions) in colliders.iter() {
         for c in collisions.iter() {

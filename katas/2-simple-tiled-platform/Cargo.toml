@@ -16,6 +16,8 @@ user-properties = ["bevy_ecs_tiled/user_properties"]
 [dependencies]
 avian2d.workspace = true
 bevy.workspace = true
+bevy_asset_loader.workspace = true
+bevy_asset_loader_derive.workspace = true
 bevy_ecs_tiled.workspace = true
 bevy_ecs_tilemap.workspace = true
 simple-2d-camera = { path = "../../random_plugins/simple-2d-camera" }

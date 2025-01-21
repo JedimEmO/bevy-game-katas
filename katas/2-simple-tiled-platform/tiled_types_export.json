@@ -211,7 +211,7 @@
     ]
   },
   {
-    "id": 153,
+    "id": 152,
     "name": "avian2d::dynamics::ccd::SpeculativeMargin",
     "type": "class",
     "useAs": [
@@ -885,7 +885,7 @@
     ]
   },
   {
-    "id": 147,
+    "id": 146,
     "name": "avian2d::dynamics::rigid_body::physics_material::Restitution",
     "type": "class",
     "useAs": [
@@ -1239,7 +1239,7 @@
     ]
   },
   {
-    "id": 142,
+    "id": 141,
     "name": "avian2d::dynamics::solver::joints::revolute::RevoluteJoint",
     "type": "class",
     "useAs": [
@@ -1602,7 +1602,7 @@
     ]
   },
   {
-    "id": 146,
+    "id": 145,
     "name": "bevy_audio::audio::GlobalVolume",
     "type": "class",
     "useAs": [
@@ -2346,7 +2346,7 @@
     ]
   },
   {
-    "id": 151,
+    "id": 150,
     "name": "bevy_core::name::Name",
     "type": "class",
     "useAs": [
@@ -2358,7 +2358,7 @@
       {
         "name": "hash",
         "type": "int",
-        "value": 3564238978686735930
+        "value": 17148589853197344364
       },
       {
         "name": "name",
@@ -2712,7 +2712,7 @@
     "valuesAsFlags": false
   },
   {
-    "id": 148,
+    "id": 147,
     "name": "bevy_core_pipeline::post_process::ChromaticAberration",
     "type": "class",
     "useAs": [
@@ -3090,7 +3090,7 @@
     ]
   },
   {
-    "id": 155,
+    "id": 154,
     "name": "bevy_ecs_tilemap::tiles::TileColor",
     "type": "class",
     "useAs": [
@@ -3156,7 +3156,7 @@
     ]
   },
   {
-    "id": 152,
+    "id": 151,
     "name": "bevy_ecs_tilemap::tiles::TilePosOld",
     "type": "class",
     "useAs": [
@@ -4077,7 +4077,7 @@
     ]
   },
   {
-    "id": 143,
+    "id": 142,
     "name": "bevy_pbr::light_probe::LightProbe",
     "type": "class",
     "useAs": [
@@ -4697,7 +4697,7 @@
     ]
   },
   {
-    "id": 149,
+    "id": 148,
     "name": "bevy_render::camera::clear_color::ClearColor",
     "type": "class",
     "useAs": [
@@ -6450,7 +6450,7 @@
     ]
   },
   {
-    "id": 145,
+    "id": 144,
     "name": "bevy_ui::measurement::ContentSize",
     "type": "class",
     "useAs": [
@@ -6769,7 +6769,7 @@
     "members": []
   },
   {
-    "id": 154,
+    "id": 153,
     "name": "bevy_ui::widget::image::ImageNode",
     "type": "class",
     "useAs": [
@@ -7235,7 +7235,7 @@
     "valuesAsFlags": false
   },
   {
-    "id": 150,
+    "id": 149,
     "name": "bevy_window::window::PrimaryWindow",
     "type": "class",
     "useAs": [
@@ -8885,7 +8885,7 @@
     ]
   },
   {
-    "id": 141,
+    "id": 155,
     "name": "simple_tiled_platform::game_system::Collectible",
     "type": "class",
     "useAs": [

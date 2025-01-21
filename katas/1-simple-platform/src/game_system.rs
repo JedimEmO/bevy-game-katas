@@ -75,7 +75,7 @@ fn start_simple_platform_game(
     Transform,
     Collider(|| Collider::rectangle(16., 16.)),
     RigidBody(|| RigidBody::Static),
-    Friction(|| Friction::new(0.2))
+    Friction(|| Friction::new(1.))
 )]
 struct Tile;
 
