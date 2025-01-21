@@ -1,6 +1,7 @@
 use bevy::prelude::*;
 use bevy::render::camera::ScalingMode;
 
+pub const CAMERA_TRACK_SPEED: f32 = 200.;
 pub struct SimplePixel2dCameraPlugin {
     pub screen_size: Vec2,
 }
@@ -28,14 +29,23 @@ impl Plugin for SimplePixel2dCameraPlugin {
 }
 
 fn camera_track_system(
+    time: Res<Time>,
     mut camera: Query<&mut Transform, With<Camera>>,
     tracked: Query<&Transform, (With<PixelCameraTracked>, Without<Camera>)>,
 ) {
     let mut camera = camera.single_mut();
 
     for transform in tracked.iter() {
-        camera.translation.x = transform.translation.x;
-        camera.translation.y = transform.translation.y;
+        let dx = transform.translation.x - camera.translation.x;
+        let dy = transform.translation.y - camera.translation.y;
+
+        if dx.abs() >= 50. {
+            camera.translation.x += dx.signum() * CAMERA_TRACK_SPEED * time.delta_secs();
+        }
+
+        if dy.abs() >= 30. {
+            camera.translation.y += dy.signum() * CAMERA_TRACK_SPEED * time.delta_secs();
+        }
     }
 }
 

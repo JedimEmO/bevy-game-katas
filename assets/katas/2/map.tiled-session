@@ -18,8 +18,8 @@
             "scale": 16,
             "selectedLayer": 1,
             "viewCenter": {
-                "x": 240,
-                "y": 160
+                "x": 240.0625,
+                "y": 159.96875
             }
         },
         "map.rendered.tmx#basic-tiles": {
@@ -30,10 +30,10 @@
                 2
             ],
             "scale": 1.5,
-            "selectedLayer": 0,
+            "selectedLayer": 1,
             "viewCenter": {
-                "x": 292,
-                "y": 193.99999999999997
+                "x": 202,
+                "y": 298.99999999999994
             }
         },
         "map.tmx#basic-tiles": {
@@ -52,7 +52,7 @@
             "scaleInEditor": 8
         }
     },
-    "last.exportedFilePath": "/home/mmy/repos/game/katas/assets/katas/2",
+    "last.exportedFilePath": "/home/mmy/repos/bevy-game-katas/katas/2-simple-tiled-platform/assets/katas/2",
     "last.externalTilesetPath": "/home/mmy/repos/game/katas/assets/katas/2",
     "last.imagePath": "/home/mmy/repos/game/katas/assets/tilesets",
     "last.objectTemplatePath": "/home/mmy/repos/game/katas/assets/katas/2/templates",

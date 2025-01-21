@@ -195,7 +195,7 @@ fn player_move_action_system(
         player_velocity.iter_mut()
     {
         if !grounded.is_some() {
-            gravity_scale.0 = 2.0;
+            gravity_scale.0 = FALL_GRAVITY;
         } else {
             gravity_scale.0 = 1.0;
         }
@@ -207,9 +207,12 @@ fn player_move_action_system(
         for movement_action in movement_events.read() {
             match movement_action {
                 MovementAction::Horizontal(dir) => {
-                    animation.animation_row = 1;
+                    if grounded.is_some() {
+                        animation.animation_row = 1;
+                    }
 
                     let air_factor = if grounded.is_none() { 0.4 } else { 1. };
+
                     let reverse_factor = if linear_velocity.x.signum() != dir.x.signum() {
                         FALL_GRAVITY
                     } else {
