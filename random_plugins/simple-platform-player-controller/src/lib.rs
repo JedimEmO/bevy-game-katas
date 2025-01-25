@@ -1,20 +1,23 @@
+use crate::player_components::GroundCollider;
 use avian2d::math::AdjustPrecision;
 use avian2d::prelude::*;
+use bevy::ecs::observer::TriggerTargets;
 use bevy::prelude::*;
-use bevy::sprite::Anchor;
 use bevy_asset_loader::prelude::*;
 use simple_2d_camera::PixelCameraTracked;
+
+pub mod player_components;
 
 const COLLISION_MARGIN: f32 = 1.;
 pub const TILE_SIZE_PIXELS: f32 = 16.;
 const PLAYER_COLLIDER_SIZE: f32 = TILE_SIZE_PIXELS - COLLISION_MARGIN;
 
-const MAX_SPEED: f32 = TILE_SIZE_PIXELS * 12.;
+const MAX_SPEED: f32 = TILE_SIZE_PIXELS * 16.;
 const MAX_Y_SPEED: f32 = TILE_SIZE_PIXELS * 16.;
 const ACCELERATION: f32 = 1200.;
 const JUMP_SPEED: f32 = 200.;
-const AERIAL_X_DAMPENING_FACTOR: f32 = 0.001;
-const FALL_GRAVITY: f32 = 5.0;
+const X_DAMPENING_FACTOR: f32 = 15.;
+const FALL_GRAVITY: f32 = 7.0;
 
 #[derive(Clone, Eq, PartialEq, Debug, Hash, Default, States)]
 pub enum GameStates {
@@ -27,6 +30,7 @@ pub struct PlayerPlugin;
 
 impl Plugin for PlayerPlugin {
     fn build(&self, app: &mut App) {
+
         app.init_state::<GameStates>()
             .add_loading_state(
                 LoadingState::new(GameStates::Loading)
@@ -42,7 +46,7 @@ impl Plugin for PlayerPlugin {
                     keyboard_input_system,
                     player_move_action_system,
                     movement_dampening_system,
-                    animate_sprite_system
+                    animate_sprite_system,
                 )
                     .run_if(in_state(GameStates::GameLoop))
                     .chain(),
@@ -52,23 +56,27 @@ impl Plugin for PlayerPlugin {
 
 #[derive(Component)]
 #[require(
-    Transform(|| Transform::from_xyz(0., 0., 10.)),
+    Transform(|| Transform::from_xyz(32., 0., 10.)),
     RigidBody(|| RigidBody::Dynamic),
-    Collider(|| Collider::capsule(7., 24.)),
+    Collider(|| Collider::rectangle(5., 30.)),
     CollisionMargin(|| CollisionMargin::from(COLLISION_MARGIN)),
     CollisionLayers(|| CollisionLayers::new(0b00001, 0b00101)),
     ExternalForce(|| ExternalForce::default().with_persistence(false)),
     GravityScale,
-    ShapeCaster(|| ShapeCaster::new(Collider::rectangle(TILE_SIZE_PIXELS, TILE_SIZE_PIXELS), Vec2::ZERO, 0., Dir2::NEG_Y)),
+    ShapeCaster(|| ShapeCaster::new(Collider::rectangle(4., 4.), Vec2::ZERO, 0., Dir2::NEG_Y)),
     LockedAxes(|| LockedAxes::ROTATION_LOCKED),
-    MovementDampeningFactor(|| MovementDampeningFactor(AERIAL_X_DAMPENING_FACTOR)),
+    MovementDampeningFactor(|| MovementDampeningFactor(X_DAMPENING_FACTOR)),
     JumpState,
-    PixelCameraTracked
+    PixelCameraTracked,
+    Friction(|| Friction::new(0.))
 )]
 pub struct Player;
 
 #[derive(Component)]
 pub struct Grounded;
+
+#[derive(Component)]
+pub struct Moving;
 
 #[derive(Component, Default)]
 pub struct JumpState {
@@ -100,11 +108,7 @@ struct PlayerAnimation {
     animation_count: usize,
 }
 
-
-fn animate_sprite_system(
-    time: Res<Time>,
-    mut query: Query<(&mut PlayerAnimation, &mut Sprite)>
-) {
+fn animate_sprite_system(time: Res<Time>, mut query: Query<(&mut PlayerAnimation, &mut Sprite)>) {
     for (mut timer, mut sprite) in &mut query {
         timer.timer.tick(time.delta());
 
@@ -174,25 +178,35 @@ fn keyboard_input_system(
 }
 
 fn player_move_action_system(
+    mut commands: Commands,
     time: Res<Time>,
     mut movement_events: EventReader<MovementAction>,
     mut player_velocity: Query<
         (
+            Entity,
             &mut LinearVelocity,
             Option<&Grounded>,
             &mut JumpState,
             &ShapeHits,
             &mut GravityScale,
             &mut PlayerAnimation,
-            &mut Sprite
+            &mut Sprite,
         ),
         With<Player>,
     >,
 ) {
     let delta_t = time.delta_secs_f64().adjust_precision();
 
-    for (mut linear_velocity, grounded, mut jump_state, hits, mut gravity_scale, mut animation, mut sprite) in
-        player_velocity.iter_mut()
+    for (
+        entity,
+        mut linear_velocity,
+        grounded,
+        mut jump_state,
+        hits,
+        mut gravity_scale,
+        mut animation,
+        mut sprite,
+    ) in player_velocity.iter_mut()
     {
         if !grounded.is_some() {
             gravity_scale.0 = FALL_GRAVITY;
@@ -202,6 +216,13 @@ fn player_move_action_system(
 
         if linear_velocity.y.abs() >= MAX_Y_SPEED {
             linear_velocity.y = linear_velocity.y.clamp(-MAX_Y_SPEED, MAX_Y_SPEED);
+        }
+
+        if movement_events.is_empty() {
+            commands.entity(entity).remove::<Moving>();
+            continue;
+        } else {
+            commands.entity(entity).insert(Moving);
         }
 
         for movement_action in movement_events.read() {
@@ -258,14 +279,24 @@ fn player_move_action_system(
 
 fn grounded_system(
     mut commands: Commands,
-    mut query: Query<(Entity, &ShapeHits, &mut JumpState, &LinearVelocity, &mut PlayerAnimation), With<Player>>,
+    mut query: Query<
+        (
+            Entity,
+            &ShapeHits,
+            &mut JumpState,
+            &LinearVelocity,
+            &mut PlayerAnimation,
+        ),
+        With<Player>,
+    >,
 ) {
     for (entity, hits, mut jump_state_data, velocity, mut animation) in &mut query {
-        let is_grounded = hits
-            .iter()
-            .any(|hit| {
-                hit.point2.y < 0. && hit.distance <= 15.
-            });
+        let is_grounded = hits.iter().any(|hit| {
+            hit.point2.y < 0.
+                && hit.distance <= 18.
+                && hit.normal1.y >= 0.95
+                && hit.normal2.y <= -0.95
+        });
 
         if is_grounded {
             commands.entity(entity).insert(Grounded);
@@ -281,13 +312,18 @@ fn grounded_system(
 
 fn movement_dampening_system(
     time: Res<Time>,
-    mut query: Query<(
-        &mut LinearVelocity,
-        &MovementDampeningFactor,
-        Option<&Grounded>,
-    )>,
+    mut query: Query<
+        (
+            &mut LinearVelocity,
+            &MovementDampeningFactor,
+            Option<&Grounded>,
+        ),
+        Without<Moving>,
+    >,
 ) {
     for (mut velocity, dampening, grounded) in &mut query {
-        // velocity.x *= (1. - dampening.0) * time.delta_secs();
+        if grounded.is_some() {
+            velocity.x *= 1. - dampening.0 * time.delta_secs();
+        }
     }
 }

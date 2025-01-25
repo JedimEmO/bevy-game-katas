@@ -3,7 +3,7 @@
     "commands": [
     ],
     "compatibilityVersion": 1100,
-    "extensionsPath": "extensions",
+    "extensionsPath": "sprites",
     "folders": [
         ".",
         "sprites"
@@ -2907,7 +2907,7 @@
                 {
                     "name": "hash",
                     "type": "int",
-                    "value": 877035694
+                    "value": -1218219686
                 },
                 {
                     "name": "name",
@@ -6305,21 +6305,9 @@
                     "type": "class",
                     "value": {
                         "matrix3": {
-                            "x_axis": {
-                                "x": 1,
-                                "y": 0,
-                                "z": 0
-                            },
-                            "y_axis": {
-                                "x": 0,
-                                "y": 1,
-                                "z": 0
-                            },
-                            "z_axis": {
-                                "x": 0,
-                                "y": 0,
-                                "z": 1
-                            }
+                            "x_axis": null,
+                            "y_axis": null,
+                            "z_axis": null
                         },
                         "translation": {
                             "x": 0,
@@ -9139,6 +9127,66 @@
             "members": [
             ],
             "name": "simple_tiled_platform::game_system::Collectible",
+            "type": "class",
+            "useAs": [
+                "property"
+            ]
+        },
+        {
+            "color": "#ff000000",
+            "drawFill": true,
+            "id": 419,
+            "members": [
+            ],
+            "name": "simple_platform_player_controller::colliders::GroundCollider",
+            "type": "class",
+            "useAs": [
+                "property"
+            ]
+        },
+        {
+            "color": "#ff000000",
+            "drawFill": true,
+            "id": 420,
+            "members": [
+            ],
+            "name": "simple_platform_player_controller::colliders::WallCollider",
+            "type": "class",
+            "useAs": [
+                "property"
+            ]
+        },
+        {
+            "color": "#ff000000",
+            "drawFill": true,
+            "id": 421,
+            "members": [
+            ],
+            "name": "simple_platform_player_controller::player_components::GroundCollider",
+            "type": "class",
+            "useAs": [
+                "property"
+            ]
+        },
+        {
+            "color": "#ff000000",
+            "drawFill": true,
+            "id": 422,
+            "members": [
+            ],
+            "name": "simple_platform_player_controller::player_components::WallCollider",
+            "type": "class",
+            "useAs": [
+                "property"
+            ]
+        },
+        {
+            "color": "#ff000000",
+            "drawFill": true,
+            "id": 423,
+            "members": [
+            ],
+            "name": "simple_platform_player_controller::player_components::PlayerSpawn",
             "type": "class",
             "useAs": [
                 "property"

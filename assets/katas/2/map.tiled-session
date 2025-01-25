@@ -15,11 +15,11 @@
             "scaleInEditor": 8
         },
         "map.rendered.tmx": {
-            "scale": 16,
+            "scale": 4,
             "selectedLayer": 1,
             "viewCenter": {
-                "x": 240.0625,
-                "y": 159.96875
+                "x": 137.5,
+                "y": 159.5
             }
         },
         "map.rendered.tmx#basic-tiles": {
@@ -29,15 +29,16 @@
             "expandedObjectLayers": [
                 2
             ],
-            "scale": 1.5,
-            "selectedLayer": 1,
+            "scale": 4,
+            "selectedLayer": 2,
             "viewCenter": {
-                "x": 202,
-                "y": 298.99999999999994
+                "x": 121,
+                "y": 251
             }
         },
         "map.tmx#basic-tiles": {
-            "scaleInDock": 1
+            "scaleInDock": 1,
+            "scaleInEditor": 1
         },
         "map.xml": {
             "scale": 3,
@@ -52,11 +53,12 @@
             "scaleInEditor": 8
         }
     },
-    "last.exportedFilePath": "/home/mmy/repos/bevy-game-katas/katas/2-simple-tiled-platform/assets/katas/2",
+    "last.exportedFilePath": "/home/mmy/repos/game/katas/assets/katas/2",
     "last.externalTilesetPath": "/home/mmy/repos/game/katas/assets/katas/2",
     "last.imagePath": "/home/mmy/repos/game/katas/assets/tilesets",
     "last.objectTemplatePath": "/home/mmy/repos/game/katas/assets/katas/2/templates",
     "last.objectTypesPath": "/home/mmy/repos/game/katas/katas/2-simple-tiled-platform/tiled_types_export.json",
+    "map.fixedSize": false,
     "map.lastUsedExportFilter": "Tiled map files (*.tmx *.xml)",
     "map.lastUsedFormat": "tmx",
     "map.tileHeight": 16,
@@ -67,11 +69,11 @@
         "map.rendered.tmx"
     ],
     "project": "map.tiled-project",
-    "property.type": "simple_tiled_platform::game_system::Collectible",
+    "property.type": "simple_platform_player_controller::player_components::PlayerSpawn",
     "recentFiles": [
-        "map.rendered.tmx",
         "tileset.xml",
         "map.tmx",
+        "map.rendered.tmx",
         "map.xml"
     ],
     "tileset.lastUsedFilter": "Tiled tileset files (*.tsx *.xml)",

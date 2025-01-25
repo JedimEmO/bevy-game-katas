@@ -1,84 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <map version="1.10" tiledversion="1.11.0" orientation="orthogonal" renderorder="right-down" width="30" height="20" tilewidth="16" tileheight="16" infinite="1" nextlayerid="3" nextobjectid="2">
- <tileset firstgid="1" name="basic-tiles" tilewidth="16" tileheight="16" tilecount="64" columns="8">
-  <image source="../../tilesets/2-tileset.png" width="128" height="128"/>
-  <tile id="1">
-   <objectgroup draworder="index" id="2">
-    <object id="2" x="0.0222222" y="0.977778" width="15.9111" height="14.9778"/>
-    <object id="3" x="0" y="1" width="16" height="15"/>
-   </objectgroup>
-  </tile>
-  <tile id="2">
-   <objectgroup draworder="index" id="2">
-    <object id="1" x="1" y="0" width="15" height="16"/>
-   </objectgroup>
-  </tile>
-  <tile id="3">
-   <objectgroup draworder="index" id="2">
-    <object id="1" x="0" y="0" width="16" height="16"/>
-   </objectgroup>
-  </tile>
-  <tile id="4">
-   <objectgroup draworder="index" id="2">
-    <object id="1" x="0" y="0" width="16" height="16"/>
-   </objectgroup>
-  </tile>
-  <tile id="5">
-   <objectgroup draworder="index" id="2">
-    <object id="1" x="0" y="0" width="15" height="16"/>
-   </objectgroup>
-  </tile>
-  <tile id="6">
-   <objectgroup draworder="index" id="2">
-    <object id="1" x="0" y="0" width="13" height="16"/>
-   </objectgroup>
-  </tile>
-  <tile id="9">
-   <objectgroup draworder="index" id="2">
-    <object id="5" x="2.8125" y="3.84375" width="13.1875" height="12.25"/>
-   </objectgroup>
-  </tile>
-  <tile id="10">
-   <objectgroup draworder="index" id="2">
-    <object id="2" x="0.0426" y="3.81818" width="15.946" height="12.1002"/>
-   </objectgroup>
-  </tile>
-  <tile id="11">
-   <objectgroup draworder="index" id="2">
-    <object id="3" x="0.0482818" y="3.72727" width="12.0127" height="12.3075"/>
-   </objectgroup>
-  </tile>
-  <tile id="17">
-   <objectgroup draworder="index" id="2">
-    <object id="1" x="3.09375" y="0.03125" width="12.9375" height="15.875"/>
-   </objectgroup>
-  </tile>
-  <tile id="18">
-   <objectgroup draworder="index" id="3">
-    <object id="4" x="0" y="0.03125" width="16.0938" height="16.0938"/>
-   </objectgroup>
-  </tile>
-  <tile id="19">
-   <objectgroup draworder="index" id="2">
-    <object id="1" x="0.03125" y="0" width="12.0313" height="16"/>
-   </objectgroup>
-  </tile>
-  <tile id="25">
-   <objectgroup draworder="index" id="2">
-    <object id="1" x="3.04964" y="0.03125" width="12.8324" height="14.0596"/>
-   </objectgroup>
-  </tile>
-  <tile id="26">
-   <objectgroup draworder="index" id="2">
-    <object id="1" x="0.03125" y="5.96875" width="16" height="8.1875"/>
-   </objectgroup>
-  </tile>
-  <tile id="27">
-   <objectgroup draworder="index" id="2">
-    <object id="1" x="0.03125" y="0" width="11.9688" height="13.0625"/>
-   </objectgroup>
-  </tile>
- </tileset>
+ <editorsettings>
+  <export target="map.rendered.tmx" format="tmx"/>
+ </editorsettings>
+ <tileset firstgid="1" source="tileset.xml"/>
  <layer id="1" name="Tile Layer 1" width="30" height="20">
   <data encoding="csv">
    <chunk x="128" y="-48" width="16" height="16">

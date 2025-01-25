@@ -4,7 +4,10 @@ use bevy::ecs::observer::TriggerTargets;
 use bevy::prelude::*;
 use bevy_ecs_tiled::prelude::*;
 use bevy_ecs_tilemap::prelude::*;
-use simple_platform_player_controller::{Player, PlayerPlugin};
+use simple_platform_player_controller::player_components::{
+    GroundCollider, PlayerSpawn, WallCollider,
+};
+use simple_platform_player_controller::{Player, PlayerPlugin, PlayerSpawnSettings};
 
 pub struct SimplePlatformGame;
 
@@ -19,12 +22,13 @@ impl Plugin for SimplePlatformGame {
         ));
 
         app.register_type::<Collectible>();
+        app.register_type::<PlayerSpawn>();
         #[cfg(feature = "avian-debug")]
         app.add_plugins(PhysicsDebugPlugin::default());
         app.add_systems(Startup, start_simple_platform_game);
         app.add_systems(
             Update,
-            (collectible_system, player_collectible_collider_system),
+            (collectible_system, player_collectible_collider_system, player_spawn_system),
         );
         app.insert_resource(Gravity(Vec2::new(0., -9.81 * 32.)));
     }
@@ -58,9 +62,32 @@ impl TiledPhysicsBackend for StaticTiledAvianBackend {
             .spawn_collider(commands, map, collider_source)
             .map(|collider| {
                 commands.entity(collider.entity).insert(RigidBody::Static);
-                commands.entity(collider.entity).insert(Friction::new(1.));
+                commands.entity(collider.entity).insert(Friction::new(0.));
                 collider
             })
+    }
+}
+
+fn player_spawn_system(
+    mut spawn_settings: ResMut<PlayerSpawnSettings>,
+    mut player: Query<&mut Transform, With<Player>>,
+    mut camera: Query<&mut Transform, (With<Camera>, Without<Player>)>,
+    spawn_entity: Query<&Transform, (Added<PlayerSpawn>, Without<Player>, Without<Camera>)>,
+) {
+    let Ok(spawn_transform) = spawn_entity.get_single() else {
+        return;
+    };
+
+    info!("Spawning player at {:?}", spawn_transform.translation);
+    spawn_settings.position.x = spawn_transform.translation.x;
+    spawn_settings.position.y = spawn_transform.translation.y;
+
+    if let Ok(mut player_transform) = player.get_single_mut() {
+        player_transform.translation = spawn_transform.translation;
+    };
+
+    if let Ok(mut camera_transform) = camera.get_single_mut() {
+        camera_transform.translation = spawn_transform.translation;
     }
 }
 
