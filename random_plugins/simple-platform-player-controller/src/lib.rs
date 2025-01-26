@@ -17,10 +17,13 @@ const JUMP_SPEED: f32 = 350.;
 const X_DAMPENING_FACTOR: f32 = 15.;
 const FALL_GRAVITY: f32 = 10.0;
 
+pub const PLAYER_ATTACK_DELAY_SECONDS: f64 = 0.3;
+
 #[derive(Clone, Eq, PartialEq, Debug, Hash, Default, States)]
 pub enum GameStates {
     #[default]
     Loading,
+    SpawnPlayer,
     GameLoop,
 }
 
@@ -31,10 +34,10 @@ impl Plugin for PlayerPlugin {
         app.init_state::<GameStates>()
             .add_loading_state(
                 LoadingState::new(GameStates::Loading)
-                    .continue_to_state(GameStates::GameLoop)
+                    .continue_to_state(GameStates::SpawnPlayer)
                     .load_collection::<PlayerAssets>(),
             )
-            .add_systems(OnEnter(GameStates::GameLoop), spawn_player_system)
+            .add_systems(OnEnter(GameStates::SpawnPlayer), spawn_player_system)
             .add_event::<MovementAction>()
             .add_systems(
                 Update,
@@ -65,7 +68,8 @@ impl Plugin for PlayerPlugin {
     MovementDampeningFactor(|| MovementDampeningFactor(X_DAMPENING_FACTOR)),
     JumpState,
     PixelCameraTracked,
-    Friction(|| Friction::new(0.))
+    Friction(|| Friction::new(0.)),
+    PlayerActionTracker
 )]
 pub struct Player;
 
@@ -74,6 +78,16 @@ pub struct Grounded;
 
 #[derive(Component)]
 pub struct Moving;
+
+#[derive(Component)]
+pub struct Attacking {
+    pub attack_started_at: f64,
+}
+
+#[derive(Component, Default)]
+pub struct PlayerActionTracker {
+    pub last_attack_at: Option<f64>,
+}
 
 #[derive(Component, Default)]
 pub struct JumpState {
@@ -92,7 +106,7 @@ pub struct PlayerSpawnSettings {
 
 #[derive(AssetCollection, Resource)]
 pub struct PlayerAssets {
-    #[asset(texture_atlas_layout(tile_size_x = 32, tile_size_y = 32, columns = 4, rows = 4))]
+    #[asset(texture_atlas_layout(tile_size_x = 32, tile_size_y = 32, columns = 4, rows = 5))]
     player_layout: Handle<TextureAtlasLayout>,
     #[asset(image(sampler(filter = nearest)))]
     #[asset(path = "sprites/guy.png")]
@@ -123,13 +137,15 @@ fn spawn_player_system(
     mut commands: Commands,
     player_assets: Res<PlayerAssets>,
     player_spawn_settings: Res<PlayerSpawnSettings>,
+    mut next_state: ResMut<NextState<GameStates>>,
 ) {
+    info!("Spawning player at {:?}", player_spawn_settings.position);
     commands.spawn((
         Player,
         Transform::from_xyz(
             player_spawn_settings.position.x,
             player_spawn_settings.position.y,
-            0.,
+            0.5,
         ),
         Sprite::from_atlas_image(
             player_assets.player.clone(),
@@ -141,6 +157,8 @@ fn spawn_player_system(
             animation_count: 0,
         },
     ));
+
+    next_state.set(GameStates::GameLoop);
 }
 
 #[derive(Event)]
@@ -148,6 +166,7 @@ pub enum MovementAction {
     Horizontal(Vec2),
     Jump,
     JumpAbort,
+    Attack,
 }
 
 fn keyboard_input_system(
@@ -155,6 +174,10 @@ fn keyboard_input_system(
     key_input: Res<ButtonInput<KeyCode>>,
 ) {
     let mut direction = Vec2::ZERO;
+
+    if key_input.pressed(KeyCode::KeyF) {
+        event_sender.send(MovementAction::Attack);
+    }
 
     if key_input.pressed(KeyCode::KeyD) || key_input.pressed(KeyCode::ArrowRight) {
         direction.x = 1.;
@@ -188,6 +211,8 @@ fn player_move_action_system(
             &mut GravityScale,
             &mut PlayerAnimation,
             &mut Sprite,
+            Option<&Attacking>,
+            &mut PlayerActionTracker,
         ),
         With<Player>,
     >,
@@ -202,6 +227,8 @@ fn player_move_action_system(
         mut gravity_scale,
         mut animation,
         mut sprite,
+        attacking,
+        mut player_actions,
     ) in player_velocity.iter_mut()
     {
         if !grounded.is_some() {
@@ -212,6 +239,16 @@ fn player_move_action_system(
 
         if linear_velocity.y.abs() >= MAX_Y_SPEED {
             linear_velocity.y = linear_velocity.y.clamp(-MAX_Y_SPEED, MAX_Y_SPEED);
+        }
+
+        if let Some(_attacking) = attacking {
+            if animation.animation_count == 3 {
+                animation.timer = Timer::from_seconds(0.1, TimerMode::Repeating);
+                animation.animation_row = 0;
+                commands.entity(entity).remove::<Attacking>();
+            }
+
+            continue;
         }
 
         if movement_events.is_empty() {
@@ -270,6 +307,25 @@ fn player_move_action_system(
                         }
                     }
                 }
+                MovementAction::Attack => {
+                    let now = time.elapsed_secs_f64();
+
+                    if now - player_actions.last_attack_at.unwrap_or(0.)
+                        < PLAYER_ATTACK_DELAY_SECONDS
+                    {
+                        continue;
+                    }
+
+                    player_actions.last_attack_at = Some(now);
+
+                    animation.animation_row = 4;
+                    animation.animation_count = 0;
+                    animation.timer = Timer::from_seconds(0.020, TimerMode::Repeating);
+
+                    commands.entity(entity).insert(Attacking {
+                        attack_started_at: now,
+                    });
+                }
             }
         }
     }
@@ -286,12 +342,14 @@ fn grounded_system(
             &LinearVelocity,
             &mut PlayerAnimation,
             &Transform,
+            Option<&Attacking>,
         ),
         With<Player>,
     >,
     spatial_query: SpatialQuery,
 ) {
-    for (entity, hits, mut jump_state_data, velocity, mut animation, player_transform) in &mut query
+    for (entity, hits, mut jump_state_data, velocity, mut animation, player_transform, attacking) in
+        &mut query
     {
         let is_grounded = hits.iter().any(|hit| {
             hit.point2.y < 0.
@@ -305,11 +363,14 @@ fn grounded_system(
         if is_grounded {
             jump_state_data.last_grounded_time = Some(now);
 
+            if attacking.is_none() {
+                animation.animation_row = 0;
+            }
+
             if velocity.y >= 0. {
                 commands.entity(entity).insert(Grounded);
                 jump_state_data.used = 0;
                 jump_state_data.left_ground_at = None;
-                animation.animation_row = 0;
             }
         } else {
             // Check for collisions when going up
@@ -329,7 +390,9 @@ fn grounded_system(
             }
 
             commands.entity(entity).remove::<Grounded>();
-            animation.animation_row = 3;
+            if attacking.is_none() {
+                animation.animation_row = 3;
+            }
         }
     }
 }

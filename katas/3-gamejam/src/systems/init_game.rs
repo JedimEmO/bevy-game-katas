@@ -3,7 +3,7 @@ use avian2d::PhysicsPlugins;
 use bevy::prelude::*;
 use bevy_ecs_ldtk::prelude::*;
 use simple_platform_player_controller::player_components::PlayerSpawn;
-use simple_platform_player_controller::{Player, PlayerPlugin, PlayerSpawnSettings};
+use simple_platform_player_controller::{GameStates, Player, PlayerPlugin, PlayerSpawnSettings};
 
 pub struct SimplePlatformGame;
 
@@ -21,7 +21,7 @@ impl Plugin for SimplePlatformGame {
         .register_ldtk_int_cell::<WallBundle>(1)
         .register_type::<PlayerSpawn>()
         .add_systems(Startup, start_simple_platform_game)
-        .add_systems(Update, (wall_spawn_system, player_spawn_system).chain())
+        .add_systems(Update, (wall_spawn_system, player_spawn_system).run_if(in_state(GameStates::GameLoop)))
         .insert_resource(Gravity(Vec2::new(0., -9.81 * 32.)));
 
         #[cfg(feature = "avian-debug")]
@@ -41,7 +41,7 @@ fn wall_spawn_system(
     mut commands: Commands,
     wall_query: Query<(Entity, &Wall, &GridCoords), Added<Wall>>,
 ) {
-    for (entity, wall, coords) in wall_query.iter() {
+    for (entity, _wall, _coords) in wall_query.iter() {
         commands.entity(entity).insert((
             Collider::rectangle(16., 16.),
             CollisionLayers::new(0b00100, 0b00101),
@@ -50,11 +50,6 @@ fn wall_spawn_system(
             Friction::new(0.),
         ));
     }
-}
-
-#[derive(Resource)]
-pub struct GameSpriteSheet {
-    pub coin: Handle<Image>,
 }
 
 fn start_simple_platform_game(mut commands: Commands, asset_server: Res<AssetServer>) {
