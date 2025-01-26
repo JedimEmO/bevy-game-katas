@@ -1,8 +1,11 @@
+use avian2d::prelude::LinearVelocity;
 use bevy::prelude::*;
 use bevy::render::camera::ScalingMode;
 
 pub const CAMERA_TRACK_SPEED: f32 = 200.;
-pub const CAMERA_TRACK_SPEED_FAST: f32 = 500.;
+pub const CAMERA_TRACK_SPEED_FAST: f32 = 1000.;
+pub const SPEED_CAMERA_TRACK_FACTOR: f32 = 0.4;
+
 pub struct SimplePixel2dCameraPlugin {
     pub screen_size: Vec2,
 }
@@ -32,18 +35,19 @@ impl Plugin for SimplePixel2dCameraPlugin {
 fn camera_track_system(
     time: Res<Time>,
     mut camera: Query<&mut Transform, With<Camera>>,
-    tracked: Query<&Transform, (With<PixelCameraTracked>, Without<Camera>)>,
+    tracked: Query<(&Transform, &LinearVelocity), (With<PixelCameraTracked>, Without<Camera>)>,
 ) {
     let mut camera = camera.single_mut();
 
-    for transform in tracked.iter() {
-        let dx = transform.translation.x - camera.translation.x;
-        let dy = transform.translation.y - camera.translation.y;
+    for (transform, velocity) in tracked.iter() {
+        let track_point = calculate_camera_track_point(transform, velocity);
+        let dx = track_point.x - camera.translation.x;
+        let dy = track_point.y - camera.translation.y;
 
-        if dx.abs() >= 150. {
-            camera.translation.x += dx.signum() * CAMERA_TRACK_SPEED_FAST * time.delta_secs();
-        } else if dx.abs() >= 50. {
-            camera.translation.x += dx.signum() * CAMERA_TRACK_SPEED * time.delta_secs();
+        let speed_window_x = (dx.abs().clamp(30., 150.) - 30.) / 120.;
+
+        if dx.abs() >= 30. {
+            camera.translation.x += dx.signum() * CAMERA_TRACK_SPEED_FAST * speed_window_x * time.delta_secs();
         }
 
         if dy.abs() >= 100. {
@@ -67,4 +71,13 @@ fn start_camera_system(mut commands: Commands, camera_resolution: Res<PixelCamer
             ..OrthographicProjection::default_2d()
         },
     ));
+}
+
+fn calculate_camera_track_point(transform: &Transform, velocity: &LinearVelocity) -> Vec2 {
+    let x_speed = velocity.x;
+
+    let track_x = transform.translation.x + x_speed * SPEED_CAMERA_TRACK_FACTOR;
+    let track_y = transform.translation.y;
+
+    Vec2::new(track_x, track_y)
 }

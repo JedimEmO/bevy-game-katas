@@ -5,6 +5,7 @@ resolver = "2"
 members = [
     "katas/1-simple-platform",
     "katas/2-simple-tiled-platform",
+    "katas/3-gamejam",
     "random_plugins/simple-2d-camera",
     "random_plugins/simple-platform-player-controller"
 ]
@@ -15,6 +16,7 @@ bevy = "0.15.0"
 bevy_asset_loader = "0.22.0"
 bevy_asset_loader_derive = "0.22.0"
 bevy_ecs_tiled = { version = "0.5.1", features = ["avian"] }
+bevy_ecs_ldtk = { version = "0.11.0" }
 bevy_ecs_tilemap = { version = "0.15.0", default-features = false }
 tiled = "0.13.0"
 

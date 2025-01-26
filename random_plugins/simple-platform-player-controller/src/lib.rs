@@ -9,7 +9,7 @@ pub mod player_components;
 const COLLISION_MARGIN: f32 = 1.;
 pub const TILE_SIZE_PIXELS: f32 = 16.;
 
-const MAX_SPEED: f32 = TILE_SIZE_PIXELS * 16.;
+const MAX_SPEED: f32 = TILE_SIZE_PIXELS * 20.;
 const MAX_Y_SPEED: f32 = TILE_SIZE_PIXELS * 32.;
 const MAX_JUMP_ACCELERATION_TIME: f64 = 0.25;
 const ACCELERATION: f32 = 1200.;
@@ -53,7 +53,7 @@ impl Plugin for PlayerPlugin {
 
 #[derive(Component)]
 #[require(
-    Transform(|| Transform::from_xyz(32., 0., 10.)),
+    Transform(|| Transform::from_xyz(32., 0., 0.)),
     RigidBody(|| RigidBody::Dynamic),
     Collider(|| Collider::rectangle(7., 30.)),
     CollisionMargin(|| CollisionMargin::from(COLLISION_MARGIN)),
@@ -74,7 +74,6 @@ pub struct Grounded;
 
 #[derive(Component)]
 pub struct Moving;
-
 
 #[derive(Component, Default)]
 pub struct JumpState {
@@ -130,7 +129,7 @@ fn spawn_player_system(
         Transform::from_xyz(
             player_spawn_settings.position.x,
             player_spawn_settings.position.y,
-            10.,
+            0.,
         ),
         Sprite::from_atlas_image(
             player_assets.player.clone(),
@@ -229,18 +228,14 @@ fn player_move_action_system(
                         animation.animation_row = 1;
                     }
 
-                    let air_factor = if grounded.is_none() { 0.4 } else { 1. };
-
                     let reverse_factor = if linear_velocity.x.signum() != dir.x.signum() {
                         FALL_GRAVITY
                     } else {
                         1.
                     };
 
-                    linear_velocity.x +=
-                        dir.x * ACCELERATION * delta_t * air_factor * reverse_factor;
-                    linear_velocity.y +=
-                        dir.y * ACCELERATION * delta_t * air_factor * reverse_factor;
+                    linear_velocity.x += dir.x * ACCELERATION * delta_t * reverse_factor;
+                    linear_velocity.y += dir.y * ACCELERATION * delta_t * reverse_factor;
 
                     linear_velocity.x = linear_velocity.x.clamp(-MAX_SPEED, MAX_SPEED);
                     sprite.flip_x = dir.x < 0.;
@@ -258,7 +253,9 @@ fn player_move_action_system(
                         jump_state.left_ground_at = Some(now);
                         linear_velocity.y = JUMP_SPEED;
                         gravity_scale.0 = 1.;
-                    } else if left_ground_at.is_some() && now - left_ground_at.unwrap() < MAX_JUMP_ACCELERATION_TIME {
+                    } else if left_ground_at.is_some()
+                        && now - left_ground_at.unwrap() < MAX_JUMP_ACCELERATION_TIME
+                    {
                         linear_velocity.y = JUMP_SPEED;
                         gravity_scale.0 = 1.;
                     }
@@ -288,13 +285,14 @@ fn grounded_system(
             &mut JumpState,
             &LinearVelocity,
             &mut PlayerAnimation,
-            &Transform
+            &Transform,
         ),
         With<Player>,
     >,
-    spatial_query: SpatialQuery
+    spatial_query: SpatialQuery,
 ) {
-    for (entity, hits, mut jump_state_data, velocity, mut animation, player_transform) in &mut query {
+    for (entity, hits, mut jump_state_data, velocity, mut animation, player_transform) in &mut query
+    {
         let is_grounded = hits.iter().any(|hit| {
             hit.point2.y < 0.
                 && hit.distance <= 18.
@@ -316,11 +314,16 @@ fn grounded_system(
         } else {
             // Check for collisions when going up
             if velocity.y < 0. {
-                let up_hits = spatial_query.ray_hits(player_transform.translation.truncate(), Dir2::Y, 50., 2, true, &SpatialQueryFilter::default());
+                let up_hits = spatial_query.ray_hits(
+                    player_transform.translation.truncate(),
+                    Dir2::Y,
+                    50.,
+                    2,
+                    true,
+                    &SpatialQueryFilter::default(),
+                );
 
-                if up_hits.iter().any(|hit| {
-                    hit.distance < 18.
-                }) {
+                if up_hits.iter().any(|hit| hit.distance < 18.) {
                     jump_state_data.left_ground_at = Some(0.);
                 }
             }
@@ -342,7 +345,7 @@ fn movement_dampening_system(
 ) {
     for (mut velocity, dampening, grounded, moving) in &mut query {
         if grounded.is_some() && moving.is_none() {
-            velocity.x *= 1. - dampening.0 * time.delta_secs();
+            velocity.x = 0.;
         } else {
             velocity.x *= 1. - dampening.0 * 0.15 * time.delta_secs();
         }
