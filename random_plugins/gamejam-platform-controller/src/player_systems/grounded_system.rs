@@ -1,5 +1,7 @@
+use avian2d::parry::na::inf;
 use bevy::prelude::{Camera, Commands, Entity, Query, Res, Time, Transform, With};
 use avian2d::prelude::{LinearVelocity, ShapeHits, SpatialQuery, SpatialQueryFilter};
+use bevy::log::info;
 use bevy::math::Dir2;
 use bevy_trauma_shake::Shake;
 use simple_2d_camera::CameraShake;
@@ -22,6 +24,7 @@ pub fn grounded_system(
         ),
         With<Player>,
     >,
+    mut camera_query: Query<&mut Shake, With<Camera>>,
     spatial_query: SpatialQuery,
 ) {
     for (entity, hits, mut jump_state_data, velocity, mut animation, player_transform, attacking) in
@@ -47,6 +50,12 @@ pub fn grounded_system(
                 commands.entity(entity).insert(Grounded);
                 jump_state_data.used = 0;
                 jump_state_data.left_ground_at = None;
+            }
+
+            if velocity.y <= -MAX_Y_SPEED * 2. / 3. {
+                if let Ok(mut camera_entity) = camera_query.get_single_mut() {
+                    camera_entity.add_trauma(0.3);
+                }
             }
         } else {
             // Check for collisions when going up

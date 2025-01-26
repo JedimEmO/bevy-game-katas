@@ -154,11 +154,11 @@ pub fn player_control_system(
                     );
 
                     if hits.len() > 1 {
-                        let kickback = Vec2::new(facing_direction * -0.3, 0.5).normalize();
+                        let kickback = Vec2::new(facing_direction * -0.4, 0.7).normalize();
 
                         linear_velocity.x += kickback.x * WALL_HIT_KICKBACK_ACCELERATION;
                         linear_velocity.y += kickback.y * WALL_HIT_KICKBACK_ACCELERATION;
-
+                        sprite.flip_x = linear_velocity.x < 0.;
 
                         if let Ok(mut camera_entity) = camera_query.get_single_mut() {
                             camera_entity.add_trauma(0.2);
