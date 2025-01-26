@@ -34,22 +34,22 @@
  </tile>
  <tile id="9">
   <objectgroup draworder="index" id="2">
-   <object id="5" x="2.8125" y="3.84375" width="13.1875" height="12.25"/>
+   <object id="5" x="1.9375" y="1.21875" width="14.0625" height="14.875"/>
   </objectgroup>
  </tile>
  <tile id="10">
   <objectgroup draworder="index" id="2">
-   <object id="2" x="0.0426" y="3.81818" width="15.946" height="12.1002"/>
+   <object id="2" x="0.0426" y="0.94318" width="15.946" height="14.9752"/>
   </objectgroup>
  </tile>
  <tile id="11">
   <objectgroup draworder="index" id="2">
-   <object id="3" x="0.0482818" y="3.72727" width="12.0127" height="12.3075"/>
+   <object id="3" x="0.0482818" y="1.38352" width="12.8252" height="14.6513"/>
   </objectgroup>
  </tile>
  <tile id="17">
   <objectgroup draworder="index" id="2">
-   <object id="1" x="3.09375" y="0.03125" width="12.9375" height="15.875"/>
+   <object id="1" x="2.125" y="0.03125" width="13.9063" height="15.875"/>
   </objectgroup>
  </tile>
  <tile id="18">
@@ -59,7 +59,7 @@
  </tile>
  <tile id="19">
   <objectgroup draworder="index" id="2">
-   <object id="1" x="0.03125" y="0" width="12.0313" height="16"/>
+   <object id="1" x="0.03125" y="0" width="12.9688" height="16"/>
   </objectgroup>
  </tile>
  <tile id="25">
@@ -74,7 +74,26 @@
  </tile>
  <tile id="27">
   <objectgroup draworder="index" id="2">
-   <object id="1" x="0.03125" y="0" width="11.9688" height="13.0625"/>
+   <object id="1" x="0.03125" y="0" width="12.875" height="13.0625"/>
+  </objectgroup>
+ </tile>
+ <tile id="41">
+  <objectgroup draworder="index" id="3">
+   <object id="2" x="-1.07738" y="5.875">
+    <polygon points="1.04613,1.71875 16.1532,6.6875 16.1399,-1.46875 1.03285,-4.46875"/>
+   </object>
+  </objectgroup>
+ </tile>
+ <tile id="42">
+  <objectgroup draworder="index" id="2">
+   <object id="1" x="0.90625" y="4.78125" width="15.1875" height="7.1875"/>
+  </objectgroup>
+ </tile>
+ <tile id="43">
+  <objectgroup draworder="index" id="2">
+   <object id="1" x="1.04706" y="9.61713">
+    <polygon points="-0.484561,-4.85592 14.5658,-7.80463 14.6717,-0.960401 -0.255803,5.25787"/>
+   </object>
   </objectgroup>
  </tile>
 </tileset>

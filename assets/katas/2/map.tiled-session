@@ -3,11 +3,11 @@
         "height": 4300,
         "width": 2
     },
-    "activeFile": "map.tmx",
+    "activeFile": "map2.tmx",
     "expandedProjectPaths": [
         "sprites",
-        "templates",
-        "."
+        ".",
+        "templates"
     ],
     "fileStates": {
         "": {
@@ -16,10 +16,10 @@
         },
         "map.rendered.tmx": {
             "scale": 4,
-            "selectedLayer": 1,
+            "selectedLayer": 0,
             "viewCenter": {
-                "x": 137.5,
-                "y": 159.5
+                "x": 768.125,
+                "y": -128
             }
         },
         "map.rendered.tmx#basic-tiles": {
@@ -32,8 +32,8 @@
             "scale": 4,
             "selectedLayer": 2,
             "viewCenter": {
-                "x": 121,
-                "y": 251
+                "x": 159,
+                "y": 178
             }
         },
         "map.tmx#basic-tiles": {
@@ -46,6 +46,18 @@
             "viewCenter": {
                 "x": 254.66666666666669,
                 "y": 79.16666666666666
+            }
+        },
+        "map2.tmx": {
+            "expandedObjectLayers": [
+                3,
+                2
+            ],
+            "scale": 1.5,
+            "selectedLayer": 1,
+            "viewCenter": {
+                "x": -189.33333333333326,
+                "y": -88
             }
         },
         "tileset.xml": {
@@ -66,14 +78,16 @@
     "openFiles": [
         "map.tmx",
         "tileset.xml",
-        "map.rendered.tmx"
+        "map.rendered.tmx",
+        "map2.tmx"
     ],
     "project": "map.tiled-project",
-    "property.type": "simple_platform_player_controller::player_components::PlayerSpawn",
+    "property.type": "simple_tiled_platform::game_system::Collectible",
     "recentFiles": [
-        "tileset.xml",
         "map.tmx",
+        "tileset.xml",
         "map.rendered.tmx",
+        "map2.tmx",
         "map.xml"
     ],
     "tileset.lastUsedFilter": "Tiled tileset files (*.tsx *.xml)",

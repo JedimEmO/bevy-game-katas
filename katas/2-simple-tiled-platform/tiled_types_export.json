@@ -132,7 +132,7 @@
     ]
   },
   {
-    "id": 177,
+    "id": 176,
     "name": "avian2d::collision::collider::Sensor",
     "type": "class",
     "useAs": [
@@ -362,7 +362,7 @@
     ]
   },
   {
-    "id": 159,
+    "id": 158,
     "name": "avian2d::dynamics::rigid_body::GravityScale",
     "type": "class",
     "useAs": [
@@ -434,7 +434,7 @@
     ]
   },
   {
-    "id": 181,
+    "id": 180,
     "name": "avian2d::dynamics::rigid_body::MaxLinearSpeed",
     "type": "class",
     "useAs": [
@@ -509,7 +509,7 @@
     "members": []
   },
   {
-    "id": 178,
+    "id": 177,
     "name": "avian2d::dynamics::rigid_body::Sleeping",
     "type": "class",
     "useAs": [
@@ -531,7 +531,7 @@
     "members": []
   },
   {
-    "id": 158,
+    "id": 157,
     "name": "avian2d::dynamics::rigid_body::TimeSleeping",
     "type": "class",
     "useAs": [
@@ -753,7 +753,7 @@
     "members": []
   },
   {
-    "id": 165,
+    "id": 164,
     "name": "avian2d::dynamics::rigid_body::mass_properties::components::collider::ColliderDensity",
     "type": "class",
     "useAs": [
@@ -1331,7 +1331,7 @@
     ]
   },
   {
-    "id": 164,
+    "id": 163,
     "name": "avian2d::dynamics::solver::schedule::SubstepCount",
     "type": "class",
     "useAs": [
@@ -1369,7 +1369,7 @@
     ]
   },
   {
-    "id": 182,
+    "id": 181,
     "name": "avian2d::position::PreSolveAccumulatedTranslation",
     "type": "class",
     "useAs": [
@@ -1500,7 +1500,7 @@
     ]
   },
   {
-    "id": 160,
+    "id": 159,
     "name": "avian2d::sync::ancestor_marker::AncestorMarker<avian2d::collision::collider::backend::ColliderMarker>",
     "type": "class",
     "useAs": [
@@ -1511,7 +1511,7 @@
     "members": []
   },
   {
-    "id": 184,
+    "id": 183,
     "name": "avian2d::sync::ancestor_marker::AncestorMarker<avian2d::dynamics::rigid_body::RigidBody>",
     "type": "class",
     "useAs": [
@@ -2358,7 +2358,7 @@
       {
         "name": "hash",
         "type": "int",
-        "value": 2886774277073201147
+        "value": 5918182339241474833
       },
       {
         "name": "name",
@@ -2783,7 +2783,7 @@
     "members": []
   },
   {
-    "id": 156,
+    "id": 155,
     "name": "bevy_core_pipeline::smaa::Smaa",
     "type": "class",
     "useAs": [
@@ -2924,7 +2924,7 @@
     ]
   },
   {
-    "id": 171,
+    "id": 170,
     "name": "bevy_ecs_tilemap::map::TilemapSize",
     "type": "class",
     "useAs": [
@@ -3287,7 +3287,7 @@
     ]
   },
   {
-    "id": 186,
+    "id": 185,
     "name": "bevy_gltf::GltfSceneExtras",
     "type": "class",
     "useAs": [
@@ -3332,7 +3332,7 @@
     ]
   },
   {
-    "id": 179,
+    "id": 178,
     "name": "bevy_hierarchy::components::parent::Parent",
     "type": "class",
     "useAs": [
@@ -3836,7 +3836,7 @@
     ]
   },
   {
-    "id": 167,
+    "id": 166,
     "name": "bevy_pbr::light::DirectionalLightShadowMap",
     "type": "class",
     "useAs": [
@@ -4829,7 +4829,7 @@
     ]
   },
   {
-    "id": 185,
+    "id": 184,
     "name": "bevy_render::camera::projection::PerspectiveProjection",
     "type": "class",
     "useAs": [
@@ -5128,7 +5128,7 @@
     ]
   },
   {
-    "id": 162,
+    "id": 161,
     "name": "bevy_render::mesh::components::Mesh2d",
     "type": "class",
     "useAs": [
@@ -5194,7 +5194,7 @@
     ]
   },
   {
-    "id": 175,
+    "id": 174,
     "name": "bevy_render::primitives::CascadesFrusta",
     "type": "class",
     "useAs": [
@@ -5205,7 +5205,7 @@
     "members": []
   },
   {
-    "id": 183,
+    "id": 182,
     "name": "bevy_render::primitives::CubemapFrusta",
     "type": "class",
     "useAs": [
@@ -5345,7 +5345,7 @@
     "valuesAsFlags": false
   },
   {
-    "id": 173,
+    "id": 172,
     "name": "bevy_render::view::visibility::VisibleEntities",
     "type": "class",
     "useAs": [
@@ -6034,7 +6034,7 @@
     "members": []
   },
   {
-    "id": 163,
+    "id": 162,
     "name": "bevy_transform_interpolation::RotationEasingState",
     "type": "class",
     "useAs": [
@@ -6058,7 +6058,7 @@
     ]
   },
   {
-    "id": 166,
+    "id": 165,
     "name": "bevy_transform_interpolation::ScaleEasingState",
     "type": "class",
     "useAs": [
@@ -6531,7 +6531,7 @@
     ]
   },
   {
-    "id": 180,
+    "id": 179,
     "name": "bevy_ui::ui_node::CalculatedClip",
     "type": "class",
     "useAs": [
@@ -6741,7 +6741,7 @@
     ]
   },
   {
-    "id": 169,
+    "id": 168,
     "name": "bevy_ui::ui_node::ZIndex",
     "type": "class",
     "useAs": [
@@ -8885,7 +8885,7 @@
     ]
   },
   {
-    "id": 161,
+    "id": 160,
     "name": "simple_platform_player_controller::player_components::PlayerSpawn",
     "type": "class",
     "useAs": [
@@ -8896,7 +8896,7 @@
     "members": []
   },
   {
-    "id": 155,
+    "id": 186,
     "name": "simple_tiled_platform::game_system::Collectible",
     "type": "class",
     "useAs": [

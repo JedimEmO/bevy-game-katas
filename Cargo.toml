@@ -14,7 +14,7 @@ avian2d = { version = "0.2.0", features = ["default"] }
 bevy = "0.15.0"
 bevy_asset_loader = "0.22.0"
 bevy_asset_loader_derive = "0.22.0"
-bevy_ecs_tiled = { version = "0.5.0", features = ["avian"] }
+bevy_ecs_tiled = { version = "0.5.1", features = ["avian"] }
 bevy_ecs_tilemap = { version = "0.15.0", default-features = false }
 tiled = "0.13.0"
 

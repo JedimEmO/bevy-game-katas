@@ -1,12 +1,9 @@
 use avian2d::prelude::*;
 use avian2d::PhysicsPlugins;
-use bevy::ecs::observer::TriggerTargets;
 use bevy::prelude::*;
 use bevy_ecs_tiled::prelude::*;
 use bevy_ecs_tilemap::prelude::*;
-use simple_platform_player_controller::player_components::{
-    GroundCollider, PlayerSpawn, WallCollider,
-};
+use simple_platform_player_controller::player_components::PlayerSpawn;
 use simple_platform_player_controller::{Player, PlayerPlugin, PlayerSpawnSettings};
 
 pub struct SimplePlatformGame;
@@ -28,7 +25,11 @@ impl Plugin for SimplePlatformGame {
         app.add_systems(Startup, start_simple_platform_game);
         app.add_systems(
             Update,
-            (collectible_system, player_collectible_collider_system, player_spawn_system),
+            (
+                collectible_system,
+                player_collectible_collider_system,
+                player_spawn_system,
+            ),
         );
         app.insert_resource(Gravity(Vec2::new(0., -9.81 * 32.)));
     }
@@ -83,11 +84,13 @@ fn player_spawn_system(
     spawn_settings.position.y = spawn_transform.translation.y;
 
     if let Ok(mut player_transform) = player.get_single_mut() {
-        player_transform.translation = spawn_transform.translation;
+        player_transform.translation.x = spawn_transform.translation.x;
+        player_transform.translation.y = spawn_transform.translation.y;
     };
 
     if let Ok(mut camera_transform) = camera.get_single_mut() {
-        camera_transform.translation = spawn_transform.translation;
+        camera_transform.translation.x = spawn_transform.translation.x;
+        camera_transform.translation.y = spawn_transform.translation.y;
     }
 }
 
@@ -98,9 +101,9 @@ struct Collectible {}
 fn collectible_system(
     mut commands: Commands,
     sprites: Res<GameSpriteSheet>,
-    collectibles: Query<(Entity, &Transform), Added<Collectible>>,
+    collectibles: Query<Entity, Added<Collectible>>,
 ) {
-    for (entity, transform) in collectibles.iter() {
+    for entity in collectibles.iter() {
         commands.entity(entity).insert((
             Sprite {
                 image: sprites.coin.clone(),

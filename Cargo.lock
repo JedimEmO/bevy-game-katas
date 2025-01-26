@@ -623,9 +623,9 @@ dependencies = [
 
 [[package]]
 name = "bevy_ecs_tiled"
-version = "0.5.0"
+version = "0.5.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "1a4297d80ffed08e59860d693a5a5687b87beec83c9b4002b69f64126af2b63c"
+checksum = "1fd460467cc05c818eda6f402c54e0d776082df064a9877b3372ee2cbdbaab34"
 dependencies = [
  "avian2d",
  "bevy",
