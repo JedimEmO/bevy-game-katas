@@ -2238,9 +2238,21 @@ dependencies = [
  "bevy_asset_loader",
  "bevy_asset_loader_derive",
  "bevy_ecs_ldtk",
+ "gamejam-platform-controller",
  "simple-2d-camera",
- "simple-platform-player-controller",
  "tiled",
+]
+
+[[package]]
+name = "gamejam-platform-controller"
+version = "0.1.0"
+dependencies = [
+ "avian2d",
+ "bevy",
+ "bevy_asset_loader",
+ "bevy_asset_loader_derive",
+ "bevy_ecs_ldtk",
+ "simple-2d-camera",
 ]
 
 [[package]]

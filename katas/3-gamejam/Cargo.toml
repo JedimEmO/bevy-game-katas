@@ -18,5 +18,5 @@ bevy_asset_loader.workspace = true
 bevy_asset_loader_derive.workspace = true
 bevy_ecs_ldtk.workspace = true
 simple-2d-camera = { path = "../../random_plugins/simple-2d-camera" }
-simple-platform-player-controller = { path = "../../random_plugins/simple-platform-player-controller" }
+gamejam-platform-controller = { path = "../../random_plugins/gamejam-platform-controller" }
 tiled.workspace = true

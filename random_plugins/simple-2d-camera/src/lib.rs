@@ -4,7 +4,7 @@ use bevy::render::camera::ScalingMode;
 
 pub const CAMERA_TRACK_SPEED: f32 = 200.;
 pub const CAMERA_TRACK_SPEED_FAST: f32 = 1000.;
-pub const SPEED_CAMERA_TRACK_FACTOR: f32 = 0.4;
+pub const SPEED_CAMERA_TRACK_FACTOR: f32 = 0.0;
 
 pub struct SimplePixel2dCameraPlugin {
     pub screen_size: Vec2,

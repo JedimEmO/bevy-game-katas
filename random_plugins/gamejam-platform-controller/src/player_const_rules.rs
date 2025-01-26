@@ -1,0 +1,11 @@
+pub const COLLISION_MARGIN: f32 = 1.;
+pub const TILE_SIZE_PIXELS: f32 = 16.;
+pub const MAX_SPEED: f32 = TILE_SIZE_PIXELS * 20.;
+pub const MAX_Y_SPEED: f32 = TILE_SIZE_PIXELS * 32.;
+pub const MAX_JUMP_ACCELERATION_TIME: f64 = 0.25;
+pub const ACCELERATION: f32 = 1200.;
+pub const JUMP_SPEED: f32 = 350.;
+pub const X_DAMPENING_FACTOR: f32 = 15.;
+pub const FALL_GRAVITY: f32 = 10.0;
+pub const PLAYER_ATTACK_DELAY_SECONDS: f64 = 0.2;
+pub const WALL_HIT_KICKBACK_ACCELERATION: f32 = 800.;
