@@ -19,6 +19,7 @@ bevy_asset_loader_derive = "0.22.0"
 bevy_ecs_tiled = { version = "0.5.1", features = ["avian"] }
 bevy_ecs_ldtk = { version = "0.11.0" }
 bevy_ecs_tilemap = { version = "0.15.0", default-features = false }
+bevy_trauma_shake = "0.4.0"
 tiled = "0.13.0"
 
 # Set the default for dependencies.

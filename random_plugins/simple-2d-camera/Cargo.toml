@@ -4,5 +4,6 @@ version = "0.1.0"
 edition = "2021"
 
 [dependencies]
-bevy.workspace = true
 avian2d.workspace = true
+bevy.workspace = true
+bevy_trauma_shake.workspace = true

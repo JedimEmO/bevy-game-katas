@@ -1263,6 +1263,16 @@ dependencies = [
 ]
 
 [[package]]
+name = "bevy_trauma_shake"
+version = "0.4.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "30e08b6256931cde9134f13be6e57a00509712ac4ce00bb88f8cc42fae229f73"
+dependencies = [
+ "bevy",
+ "noisy_bevy",
+]
+
+[[package]]
 name = "bevy_ui"
 version = "0.15.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -2252,6 +2262,7 @@ dependencies = [
  "bevy_asset_loader",
  "bevy_asset_loader_derive",
  "bevy_ecs_ldtk",
+ "bevy_trauma_shake",
  "simple-2d-camera",
 ]
 
@@ -2959,6 +2970,15 @@ dependencies = [
  "cfg-if",
  "cfg_aliases 0.2.1",
  "libc",
+]
+
+[[package]]
+name = "noisy_bevy"
+version = "0.8.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "5e24fedeca6003c0d04b916346d386f5a777aee89bf611b3960ab5d64977c165"
+dependencies = [
+ "bevy",
 ]
 
 [[package]]
@@ -4029,6 +4049,7 @@ version = "0.1.0"
 dependencies = [
  "avian2d",
  "bevy",
+ "bevy_trauma_shake",
 ]
 
 [[package]]

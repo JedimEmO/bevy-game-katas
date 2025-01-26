@@ -1,8 +1,11 @@
-use bevy::prelude::{Commands, Entity, Query, Res, Time, Transform, With};
+use bevy::prelude::{Camera, Commands, Entity, Query, Res, Time, Transform, With};
 use avian2d::prelude::{LinearVelocity, ShapeHits, SpatialQuery, SpatialQueryFilter};
 use bevy::math::Dir2;
+use bevy_trauma_shake::Shake;
+use simple_2d_camera::CameraShake;
 use crate::PlayerAnimation;
 use crate::player_components::{Attacking, Grounded, JumpState, Player};
+use crate::player_const_rules::MAX_Y_SPEED;
 
 pub fn grounded_system(
     mut commands: Commands,

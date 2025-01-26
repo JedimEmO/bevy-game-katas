@@ -6,6 +6,8 @@ use crate::{MovementAction, PlayerAnimation};
 use avian2d::math::AdjustPrecision;
 use avian2d::prelude::*;
 use bevy::prelude::*;
+use bevy_trauma_shake::Shake;
+use simple_2d_camera::CameraShake;
 
 pub fn player_control_system(
     mut commands: Commands,
@@ -26,6 +28,7 @@ pub fn player_control_system(
         ),
         With<Player>,
     >,
+    mut camera_query: Query<&mut Shake, With<Camera>>,
     spatial_query: SpatialQuery,
 ) {
     let delta_t = time.delta_secs_f64().adjust_precision();
@@ -156,6 +159,10 @@ pub fn player_control_system(
                         linear_velocity.x += kickback.x * WALL_HIT_KICKBACK_ACCELERATION;
                         linear_velocity.y += kickback.y * WALL_HIT_KICKBACK_ACCELERATION;
 
+
+                        if let Ok(mut camera_entity) = camera_query.get_single_mut() {
+                            camera_entity.add_trauma(0.2);
+                        }
                     }
                 }
             }

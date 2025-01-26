@@ -10,3 +10,4 @@ bevy.workspace = true
 bevy_asset_loader = { workspace = true, features = ["2d"] }
 bevy_asset_loader_derive.workspace = true
 bevy_ecs_ldtk.workspace = true
+bevy_trauma_shake.workspace = true
